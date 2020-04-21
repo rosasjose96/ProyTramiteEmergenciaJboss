@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"      
+      th:with="staticVersion=${@environment.getProperty('app.web.content.staticVersion')},
+			externalStaticVersion=${@environment.getProperty('app.web.content.externalStaticVersion')},
+			cdnUrl=${@environment.getProperty('app.web.content.cdn')}">
+<head>
+    <title>Trámites en estado de emergencia</title>
+    <!-- Custom fonts for this template-->
+		<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+		
+		<!-- Custom styles for this template-->
+		<link href="css/sb-admin-2.min.css" rel="stylesheet">
+		<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+</head>
+<body style="background-color:rgb(5,85,148);">
+	<br>
+	<input type="hidden" class="form-control" id="message" name="message" th:value="${message}">
+	<div class="row">
+		<!-- Content Column -->
+		<div class="col-lg-1"></div>
+		<div class="col-lg-10">
+			<div class="card" style="width: 24rem;">
+			  <div class="card-body">
+			    <h5 class="card-title text-center">TRÁMITES EN ESTADO DE EMERGENCIA</h5>
+			    <p class="card-text text-center">Nuevos trámites sin clave:</p>
+			    <a th:href="@{'/principal'}" class="btn btn-primary btn-lg btn-block">Hacer click aquí</a>
+			    <br>
+			    <ul>
+			    	<li><p class="text-sm-left">Canjes de Descansos Médicos (Solo Lima Metropolitana y Callao)</p></li>
+			    	<li><p class="text-sm-left">Acreditación de Latencia</p></li>
+			    	<li><p class="text-sm-left">Baja de Titular</p></li>
+			    	<li><p class="text-sm-left">Actualización de datos y dirección</p></li>
+			    	<li><p class="text-sm-left">Solicitud de Sepelio</p></li>
+			    	<li><p class="text-sm-left">Incapacidad con los 20 primeros días (CMP particular)</p></li>
+			    </ul>
+			  </div>
+			</div>
+		</div>
+	</div>
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+	<script src="js/bootstrap-datetimepicker.min.js"></script>
+	<!-- Page level plugins -->
+	<script src="vendor/chart.js/Chart.min.js"></script>
+	<!-- Page level custom scripts -->
+	<script src="js/demo/chart-area-demo.js"></script>
+	<script src="js/demo/chart-pie-demo.js"></script>
+	<!-- Page level plugins -->
+	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- Page level custom scripts -->
+	<script src="js/demo/datatables-demo.js"></script>
+	<script type="text/javascript">
+		$(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+		var mensajeIndex = document.getElementById('message').value;
+		if(mensajeIndex!=''&&mensajeIndex!=null){
+			alert(mensajeIndex);
+		}
+	</script>
+</body>

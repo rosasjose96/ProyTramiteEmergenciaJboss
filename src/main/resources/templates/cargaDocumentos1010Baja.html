@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"      
+      th:with="staticVersion=${@environment.getProperty('app.web.content.staticVersion')},
+			externalStaticVersion=${@environment.getProperty('app.web.content.externalStaticVersion')},
+			cdnUrl=${@environment.getProperty('app.web.content.cdn')}">
+<head>
+    <title>Trámites en estado de emergencia</title>
+    <!-- Custom fonts for this template-->
+		<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+		
+		<!-- Custom styles for this template-->
+		<link href="css/sb-admin-2.min.css" rel="stylesheet">
+		<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+</head>
+<body>
+	<br>
+	<br>
+	<!-- Content Row -->
+	<div class="row">
+		<!-- Content Column -->
+		<div class="col-lg-3 mb-4"></div>
+        <div class="col-lg-6 mb-4">
+        <!-- Project Card Example -->
+        	<form th:action="@{/}" method="post">
+	          	<div class="card shadow mb-4">
+	          		<input type="hidden" class="form-control" id="message" name="message" th:value="${message}">
+	          		<input type="hidden" class="form-control" id="emailDestino" name="emailDestino" th:value="${emailDestino}">
+	                <input type="hidden" class="form-control" id="NombresAsegurado" name="NombresAsegurado" th:value="${NombresAsegurado}">
+	                <div class="card-header py-3">
+	                	<h6 class="m-0 font-weight-bold text-primary">Carga de documentos requeridos:</h6>
+	                </div>
+	            	<div class="card-body">
+	                	<div class="row">
+	                		<div class="form-check col-lg-12 col-xs-12">
+	                			<div class="row">
+	                				<button type="button" id="btnFileCertificadoMedico" name="btnFileCertificadoMedico" class="btn btn-primary col-lg-4 col-xs-4"
+									onclick="document.getElementById('getFileCertificadoMedico').click()">
+										<h6>FORMULARIO 1010</h6>
+									</button>
+									<div class="col-lg-1 col-xs-1"></div>
+									<input 
+										type='file' class="form-control-file" id="getFileCertificadoMedico" name="getFileCertificadoMedico" style="display: none"
+										onchange="var file=document.getElementById('getFileCertificadoMedico');
+												  var btn =document.getElementById('btnFileCertificadoMedico');
+												  var inp =document.getElementById('textCertificadoMedico');
+												  if(file.value!=''){
+												  	btn.setAttribute('class','btn btn-success btn-sm btn-block col-lg-4 col-xs-4');
+												  	document.getElementById('textCertificadoMedico').value = file.value;
+												  }else{
+												  	btn.setAttribute('class','btn btn-primary btn-sm btn-block col-lg-4 col-xs-4');
+												  }
+												  ValidateSize(this,btn,inp);">
+									<input type="text" required class="form-control col-lg-7 col-xs-7" id="textCertificadoMedico" name="textCertificadoMedico">
+	                			</div>
+	                			<br>
+	                			<div class="row">
+	                				<button type="button" id="btnFileAvisoAccidenteTrabajo" name="btnFileAvisoAccidenteTrabajo" class="btn btn-primary col-lg-4 col-xs-4"
+									onclick="document.getElementById('getFileAvisoAccidenteTrabajo').click()">
+										<h6>PARTIDA DE DEFUNCION o CERTIFICADO TRABAJO CON CESE</h6>
+									</button>
+									<div class="col-lg-1 col-xs-1"></div>
+									<input 
+										type='file' class="form-control-file" id="getFileAvisoAccidenteTrabajo" name="getFileAvisoAccidenteTrabajo" style="display: none"
+										onchange="var file=document.getElementById('getFileAvisoAccidenteTrabajo');
+												  var btn =document.getElementById('btnFileAvisoAccidenteTrabajo');
+												  var inp =document.getElementById('textAvisoAccidenteTrabajo');
+												  if(file.value!=''){
+												  	btn.setAttribute('class','btn btn-success btn-sm btn-block col-lg-4 col-xs-4');
+												  	document.getElementById('textAvisoAccidenteTrabajo').value = file.value;
+												  }else{
+												  	btn.setAttribute('class','btn btn-primary btn-sm btn-block col-lg-4 col-xs-4');
+												  }
+												  ValidateSize(this,btn,inp);">
+									<input type="text" required class="form-control col-lg-7 col-xs-7" id="textAvisoAccidenteTrabajo" name="textAvisoAccidenteTrabajo">
+	                			</div>
+	                			<br>
+	                			<hr>
+	                			<br>
+	                			<div class="row text-center">
+	                				<div class="col-lg-12 col-xs-12">
+	                					<button id='btnRegistrar' type="submit" class="btn btn-primary">GUARDAR DOCUMENTOS</button>
+	                				</div>
+	                			</div>
+							</div>
+	                	</div>
+	           		</div>
+	          	</div>
+          	</form>
+		</div>            
+    </div>
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+	<script src="js/bootstrap-datetimepicker.min.js"></script>
+	<!-- Page level plugins -->
+	<script src="vendor/chart.js/Chart.min.js"></script>
+	<!-- Page level custom scripts -->
+	<script src="js/demo/chart-area-demo.js"></script>
+	<script src="js/demo/chart-pie-demo.js"></script>
+	<!-- Page level plugins -->
+	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- Page level custom scripts -->
+	<script src="js/demo/datatables-demo.js"></script>
+	<script type="text/javascript">
+		$(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+	</script>
+	<script type="text/javascript">
+	var FileSize = file.files[0].size / 1024 / 1024; // in MB
+    var FileType = file.files[0].name.split('.')[1];
+    	FileType = FileType.toUpperCase(); 
+    if (FileSize > 5) {
+        alert('Archivo no debe exceder a 5 MB');
+        btn.setAttribute('class','btn btn-primary btn-sm btn-block col-lg-4 col-xs-4');
+        inp.value = '';
+    }
+    if (FileType != 'PDF') {
+        alert('Archivo debe ser de formato PDF');
+        btn.setAttribute('class','btn btn-primary btn-sm btn-block col-lg-4 col-xs-4');
+        inp.value = '';
+    }
+	alert(document.getElementById('message').value);
+	</script>
+</body>

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"      
+      th:with="staticVersion=${@environment.getProperty('app.web.content.staticVersion')},
+			externalStaticVersion=${@environment.getProperty('app.web.content.externalStaticVersion')},
+			cdnUrl=${@environment.getProperty('app.web.content.cdn')}">
+<head>
+    <title>Trámites en estado de emergencia</title>
+    	<!-- Custom fonts for this template-->
+		<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+		
+		<!-- Custom styles for this template-->
+		<link href="css/sb-admin-2.min.css" rel="stylesheet">
+		<link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+</head>
+<body style="background-color:rgb(5,85,148);">
+	<br>
+	<!-- Content Row -->
+	<div class="row">
+		<!-- Content Column -->
+		<div class="col-lg-1 mb-4"></div>
+        <div class="col-lg-10 mb-4">
+        <!-- Project Card Example -->
+        	<form th:action="@{/cargaDocumentos}" method="post">
+        		<input type="hidden" class="form-control" id="inputFormulario" name="inputFormulario" value="formCanjeDM">
+	          	<div class="card shadow mb-4">
+	                <div class="card-header py-3">
+	                	<h6 class="m-0 font-weight-bold text-primary">Datos del asegurado</h6>
+	                </div>
+	            	<div class="card-body">
+	                	<div class="row">
+	                		<div class="form-group col-lg-3 col-xs-3">
+						        <label for="selectTipoDocumento">Tipo de Documento:</label>
+					            <select class="form-control" id="selectTipoDocumento" name="selectTipoDocumento" required>
+									<option value="DNI">DNI</option>
+									<option value="RUC">RUC</option>
+									<option value="C.E.">Carnet de Extranjería</option>
+									<option value="PTP">PTP</option>
+									<option value="Pasaporte">Pasaporte</option>
+								</select>
+							</div>							
+							<div class="form-group col-lg-3 col-xs-3">
+				                <label for="inputNroDocumento">Nro. de Documento:</label>
+								<input type="number" class="form-control" id="inputNroDocumento" name="inputNroDocumento" required maxLength="12"
+								oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+							</div>
+							<div class="form-group col-lg-6 col-xs-6">
+				                <label for="inputApellidosNombres">Apellidos y Nombres:</label>
+								<input onkeypress="return /[a-z]/i.test(event.key)" type="text" class="form-control" id="inputApellidosNombres" name="inputApellidosNombres" required>
+							</div>
+				        </div>
+				        <div class="row">
+	                		<div class="form-group col-lg-4 col-xs-4">
+				                <label for="inputCelular">Celular:</label>
+								<input type="number" maxLength="9" class="form-control" id="inputCelular" name="inputCelular" required
+								    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+								>
+							</div>
+							<div class="form-group col-lg-4 col-xs-4">
+				                <label for="inputCorreoElectronico">Correo electrónico:</label>
+								<input type="email" class="form-control" id="inputCorreoElectronico" name="inputCorreoElectronico" required>
+							</div>
+							<div class="form-group col-lg-4 col-xs-4">
+						        <label for="selectOficinaCevit">Oficina de Seguros/CEVIT:</label>
+					            <select class="form-control" id="selectOficinaCevit" name="selectOficinaCevit"
+					            	onchange="$('#pills-tab').tab('dispose')">
+									<option value="CEVIT">CEVIT CENTRO DE VALIDACIÓN DE INCAPACIDAD TEMPORAL</option>
+									<option value="OSPE AMAZONAS">OSPE AMAZONAS</option>
+									<option value="OSPE ANCASH">OSPE ANCASH</option>
+									<option value="OSPE APURIMAC">OSPE APURIMAC</option>
+									<option value="OSPE AREQUIPA">OSPE AREQUIPA</option>
+									<option value="OSPE AYACUCHO">OSPE AYACUCHO</option>
+									<option value="OSPE CAJAMARCA">OSPE CAJAMARCA</option>
+									<option value="OSPE CANETE">OSPE CAÑETE</option>
+									<option value="OSPE COMAS">OSPE COMAS</option>
+									<option value="OSPE CORPORATIVA">OSPE CORPORATIVA</option>
+									<option value="OSPE CUSCO">OSPE CUSCO</option>
+									<option value="OSPE HUACHO">OSPE HUACHO</option>
+									<option value="OSPE HUANCAVELICA">OSPE HUANCAVELICA</option>
+									<option value="OSPE HUANUCO">OSPE HUANUCO</option>
+									<option value="OSPE ICA">OSPE ICA</option>
+									<option value="OSPE JESUS MARIA">OSPE JESUS MARIA</option>
+									<option value="OSPE JULIACA">OSPE JULIACA</option>
+									<option value="OSPE JUNIN">OSPE JUNIN</option>
+									<option value="OSPE LA LIBERTAD">OSPE LA LIBERTAD</option>
+									<option value="OSPE LAMBAYEQUE">OSPE LAMBAYEQUE</option>
+									<option value="OSPE LORETO">OSPE LORETO</option>
+									<option value="OSPE MADRE DE DIOS">OSPE MADRE DE DIOS</option>
+									<option value="OSPE MOQUEGUA">OSPE MOQUEGUA</option>
+									<option value="OSPE MOYOBAMBA">OSPE MOYOBAMBA</option>
+									<option value="OSPE PASCO">OSPE PASCO</option>
+									<option value="OSPE PIURA">OSPE PIURA</option>
+									<option value="OSPE PUNO">OSPE PUNO</option>
+									<option value="OSPE SALAMANCA">OSPE SALAMANCA</option>
+									<option value="OSPE SAN ISIDRO">OSPE SAN ISIDRO</option>
+									<option value="OSPE SAN JUAN DE LURIGANCHO">OSPE SAN JUAN DE LURIGANCHO</option>
+									<option value="OSPE SAN MARTIN DE PORRES">OSPE SAN MARTIN DE PORRES</option>
+									<option value="OSPE SAN MARTIN">OSPE SAN MARTIN-(Tarapoto)</option>
+									<option value="OSPE SAN MIGUEL">OSPE SAN MIGUEL</option>
+									<option value="OSPE TACNA">OSPE TACNA</option>
+									<option value="OSPE TUMBES">OSPE TUMBES</option>
+									<option value="OSPE UCAYALI">OSPE UCAYALI</option>
+								</select>
+							</div>
+				        </div>
+	           		</div>
+	          	</div>
+	          	<div class="card shadow mb-4">
+	                <div class="card-header py-3">
+	                	<h6 class="m-0 font-weight-bold text-primary">Formulario según trámite</h6>
+	                </div>
+	            	<div class="card-body">
+	                	<div class="row">
+	                		<div class="col-lg-12 col-xs-12">
+					        	<ul class="nav nav-pills nav-fill" id="pills-tab" role="tablist">
+									<li class="nav-item" onclick="document.getElementById('inputFormulario').value='formCanjeDM';">
+										<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" 
+											aria-controls="pills-home" aria-selected="true">Anexo 10<br>Canjes de Descansos Médicos<br>(Sólo Lima Metropolitana y Callao)</a>
+								  	</li>
+								  	<li class="nav-item" onclick="document.getElementById('inputFormulario').value='formIncapacidad';">
+									    <a class="nav-link" id="pills-trueque-tab" data-toggle="pill" href="#pills-trueque" role="tab" 
+									    	aria-controls="pills-trueque" aria-selected="false">Registro Incapacidad<br>20 primeros días (CMP Particular) <br>y primera incapacidad</a>
+								  	</li>
+								  	<li class="nav-item" onclick="document.getElementById('inputFormulario').value='formSepelio';">
+									    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" 
+									    	aria-controls="pills-contact" aria-selected="false">Formulario 1040<br>Solicitud de Sepelio<br></a>
+								  	</li>
+								  	<li class="nav-item" onclick="document.getElementById('inputFormulario').value='formForm1010';">
+								    	<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" 
+								    		aria-controls="pills-profile" aria-selected="false">Formulario 1010<br>Acreditación por Latencia / Baja de Titular / <br>Actualización de datos y dirección</a>
+								  	</li>
+								</ul>
+								<div class="tab-content" id="pills-tabContent">
+									<!-- TAB FORMULARIO 1010 (INICIO) -->
+						  			<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+							  			<hr>
+							  			<div class="row" align="left">
+							  				<div class="form-group col-lg-3 col-xs-3">
+					                	   		<label for="inputRUCCentroLaboralTrab">RUC Centro Laboral Trabajador:</label>
+					                            <input type="text" class="form-control" 
+					                               	id="inputRUCCentroLaboralTrab" name="inputRUCCentroLaboralTrab">
+					                        </div>
+					                	   	<div class="form-group col-lg-3 col-xs-3">
+					                	   		<label for="inputRUCCentroAtencion">RUC Centro de Atención:</label>
+					                            <input type="text" class="form-control" 
+					                               	id="inputRUCCentroAtencion" name="inputRUCCentroAtencion">
+					                        </div>
+					                        <div class="form-group col-lg-2 col-xs-2">
+					                	   		<label for="selectPersonalTratante">Personal Tratante:</label>
+					                            <select class="form-control" id="selectPersonalTratante" name="selectPersonalTratante">
+													<option value="Medico">Médico</option>
+													<option value="Odontologo">Odontólogo</option>
+													<option value="Obstetra">Obstetra</option>
+												</select>
+					                        </div>
+					                        <div class="form-group col-lg-2 col-xs-2">
+					                	   		<label for="inputColegioProfesional">Colegio Profesional:</label>
+					                            <input type="text" class="form-control" 
+					                               	id="inputColegioProfesional" name="inputColegioProfesional">
+					                        </div>
+					                        <div class="form-group col-lg-2 col-xs-2">
+					                	   		<label for="selectTipoAtencion">Tipo de Atención:</label>
+					                            <select class="form-control" id="selectTipoAtencion" name="selectTipoAtencion">
+													<option value="Consulta Externa">Consulta Externa</option>
+													<option value="Hospitalizacion">Hospitalización</option>
+													<option value="Emergencia">Emergencia</option>
+												</select>
+					                        </div>
+					                    </div>
+					                    <div class="row" align="left">
+					                	   	<div class="form-group col-lg-4 col-xs-4">
+					                	   		<label for="selectContingencia">Contingencia:</label>
+					                            <select class="form-control" id="selectContingencia" name="selectContingencia"
+					                            onchange=
+					                            	"var valueContingencia=document.getElementById('selectContingencia').value;
+					                            	 if(valueContingencia=='Maternidad'||valueContingencia=='Parto multiple'){
+					                            	 	document.getElementById('inputFechaParto').disabled=false;
+					                            	 	document.getElementById('inputPeriodoHasta').disabled=true;
+					                            	 	var valorDiasAdicional = 0;
+					                            	 	var fechaInicial = new Date(document.getElementById('inputPeriodoDesde').value);
+					                            	 	if(valueContingencia=='Maternidad'){
+					                            	 		valorDiasAdicional = 98;
+					                            	 		document.getElementById('inputDiasCanje').value=98;
+					                            	 	}
+					                            	 	if(valueContingencia=='Parto multiple'){
+					                            	 		valorDiasAdicional = 128;
+					                            	 		document.getElementById('inputDiasCanje').value=128;
+					                            	 	}
+					                            	 	fechaInicial.setDate(fechaInicial.getDate() + valorDiasAdicional);
+					                            	 	var dd = fechaInicial.getDate();
+					                            	 		dd = ('00'+dd).slice(-2);
+													    var mm = fechaInicial.getMonth() + 1;
+													    	mm = ('00'+mm).slice(-2);
+													    var yy = fechaInicial.getFullYear();
+													
+													    var someFormattedDate = yy + '-' + mm + '-' + dd;
+														document.getElementById('inputPeriodoHasta').value = someFormattedDate; 
+					                            	 }else{
+					                            	 	document.getElementById('inputFechaParto').disabled=true;
+					                            	 	document.getElementById('inputPeriodoHasta').disabled=false;
+					                            	 	document.getElementById('inputPeriodoHasta').value=null;
+					                            	 	document.getElementById('inputDiasCanje').value=0;
+					                            	 }" >
+													<option value="Enfermedad comun">Enfermedad común</option>
+													<option value="Accidente comun">Accidente común</option>
+													<option value="Accidente de trabajo">Accidente de trabajo</option>
+													<option value="Enfermedad profesional">Enfermedad profesional</option>
+													<option value="Maternidad">Maternidad</option>
+													<option value="Parto multiple">Parto múltiple</option>
+													<option value="Accidente de transito">Accidente de tránsito</option>
+													<option value="Accidente de trabajo sin SCTR">Accidente de trabajo sin SCTR</option>
+													<option value="Niño con discap">Niño con discap - (Ley 29992)</option>
+													<option value="DS-002-2016-TR">DS-002-2016-TR</option>
+												</select>
+					                        </div>
+					                        <div class="form-group col-lg-2 col-xs-2">
+					                	   		<label for="inputPeriodoDesde">Periodo Desde:</label>
+					                            <input type="date" class="form-control" id="inputPeriodoDesde" name="inputPeriodoDesde"
+					                            onchange=
+					                            	"var inputPeriodoDesde=document.getElementById('inputPeriodoDesde').value;
+					                            	 var inputPeriodoHasta=document.getElementById('inputPeriodoHasta').value;
+					                            	 var valueContingencia=document.getElementById('selectContingencia').value;
+					                            	 if(inputPeriodoDesde==''||inputPeriodoHasta==''||(inputPeriodoDesde!=''&&(valueContingencia=='Maternidad'||valueContingencia=='Parto multiple'))){
+					                            	 	if(valueContingencia=='Maternidad'||valueContingencia=='Parto multiple'){
+					                            	 		var valorDiasAdicional = 0;
+					                            	 		var fechaInicial = new Date(document.getElementById('inputPeriodoDesde').value);
+						                            	 	if(valueContingencia=='Maternidad'){
+						                            	 		valorDiasAdicional = 98;
+						                            	 		document.getElementById('inputDiasCanje').value=98;
+						                            	 	}
+						                            	 	if(valueContingencia=='Parto multiple'){
+						                            	 		valorDiasAdicional = 128;
+						                            	 		document.getElementById('inputDiasCanje').value=128;
+						                            	 	}
+						                            	 	fechaInicial.setDate(fechaInicial.getDate() + valorDiasAdicional);
+						                            	 	var dd = fechaInicial.getDate();
+						                            	 		dd = ('00'+dd).slice(-2);
+														    var mm = fechaInicial.getMonth() + 1;
+														    	mm = ('00'+mm).slice(-2);
+														    var yy = fechaInicial.getFullYear();
+														
+														    var someFormattedDate = yy + '-' + mm + '-' + dd;
+															document.getElementById('inputPeriodoHasta').value = someFormattedDate;
+					                            	 	}else{
+					                            	 		return false;
+					                            	 	}
+					                            	 }else{
+														  m1 = new Date(inputPeriodoDesde);
+														  m2 = new Date(inputPeriodoHasta);
+														  r1 = m1.getTime()
+														  r2 = m2.getTime()
+														  r = r2-r1;
+					                            	 }
+					                            	 document.getElementById('inputDiasCanje').value=(Math.round(r/(1000*60*60*24)))+1;" >
+					                        </div>
+					                        <div class="form-group col-lg-2 col-xs-2">
+					                	   		<label for="inputPeriodoHasta">Periodo Hasta:</label>
+					                            <input type="date" class="form-control" id="inputPeriodoHasta" name="inputPeriodoHasta"
+					                            onchange=
+					                            	"var inputPeriodoDesde=document.getElementById('inputPeriodoDesde').value;
+					                            	 var inputPeriodoHasta=document.getElementById('inputPeriodoHasta').value;
+					                            	 if(inputPeriodoDesde==''||inputPeriodoHasta==''){
+					                            	 	return false;
+					                            	 }else{
+														  m1 = new Date(inputPeriodoDesde);
+														  m2 = new Date(inputPeriodoHasta);
+														  r1 = m1.getTime()
+														  r2 = m2.getTime()
+														  r = r2-r1;
+					                            	 }
+					                            	 document.getElementById('inputDiasCanje').value=(Math.round(r/(1000*60*60*24)))+1;" >
+					                        </div>
+					                        <div class="form-group col-lg-2 col-xs-2">
+					                	   		<label for="inputDiasCanje">Días a canjear:</label>
+					                            <input type="text" class="form-control" 
+					                               	id="inputDiasCanje" name="inputDiasCanje" disabled>
+					                        </div>
+					                        <div class="form-group col-lg-2 col-xs-2">
+					                	   		<label for="inputFechaParto">Fecha probable parto:</label>
+					                            <input type="date" class="form-control" 
+					                               	id="inputFechaParto" name="inputFechaParto" disabled>
+					                        </div>
+					                    </div>
+					                    <div class="row" align="left">
+					                	   	<div class="form-group col-lg-4 col-xs-4">
+					                	   		<label for="inputDiagnostico1">Diagnóstico 1 (cie10):</label>
+					                            <input type="text" class="form-control" 
+					                               	id="inputDiagnostico1" name="inputDiagnostico1">
+					                        </div>
+					                        <div class="form-group col-lg-4 col-xs-4">
+					                	   		<label for="inputDiagnostico2">Diagnóstico 2 (cie10 Opcional):</label>
+					                            <input type="text" class="form-control" 
+					                               	id="inputDiagnostico2" name="inputDiagnostico2">
+					                        </div>
+					                        <div class="form-group col-lg-4 col-xs-4 text-center">
+					                        	<br>
+					                        	<button id='btnRegistrar1' name='btnRegistrar1' type="submit" class="btn btn-primary">Adjuntar sustento</button>
+					                        </div>
+					                    </div>
+					                    <br>
+					                    <div class="row" align="left">
+					                    	<pre>  Anexo 10:  <a target="_blank" href="http://www.essalud.gob.pe/downloads/anexo_10_form_tramite_valid_certificado_medico.pdf">http://www.essalud.gob.pe/downloads/anexo_10_form_tramite_valid_certificado_medico.pdf</a></pre>
+					                    </div>
+					            	</div>
+					            	<!-- TAB FORMULARIO 1010 (FINAL) -->
+					            	
+					            	<!-- TAB FORMULARIO REGISTRO INCAPACIDAD (INICIO) -->
+					            	<div class="tab-pane fade" id="pills-trueque" role="tabpanel" aria-labelledby="pills-profile-tab">
+										<hr>
+										<div class="row" align="left">
+											<div class="form-group col-lg-9 col-xs-9 border-right">
+												<div class="row" align="left">
+													<div class="form-group col-lg-12 col-xs-12">
+														<table id="dtBasicExample" align="center" class="table table-striped table-bordered" cellspacing="0" style="width:90%">
+															<thead>
+														        <tr>
+														            <th class="th-sm"><h6>RUC Entidad Emisora</h6></th>
+														            <th class="th-sm"><h6>Colegiatura</h6></th>
+														            <th class="th-sm"><h6>Nombre</h6></th>
+														            <th class="th-sm"><h6>Fecha Emisión</h6></th>
+														            <th class="th-sm"><h6>Periodo Inicio</h6></th>
+														            <th class="th-sm"><h6>Periodo Fin</h6></th>
+														            <th class="th-sm"><h6>Cantidad Días</h6></th>
+														        </tr>
+															</thead>
+														    <tbody>
+														        <tr>
+														            <td contenteditable="true" />
+														            <td contenteditable="true"/>
+														            <td contenteditable="true"/>
+														            <td contenteditable="true"/>
+														            <td contenteditable="true"/>
+														            <td contenteditable="true"/>
+														            <td contenteditable="true"/>
+														            <td><a href="#!" class="text-success"><i class="fas fa-plus fa-2x" aria-hidden="true"></i></a></td>
+														        </tr>
+															</tbody>
+														</table>									
+													</div>												
+												</div>
+												<div class="row" align="left">
+													<div class="form-group col-lg-1 col-xs-1"></div>
+													<div class="form-group col-lg-4 col-xs-4">
+														<label for="inputRUCEmpleadorIncapacidad">RUC Empleador:</label>
+							                            <input type="text" class="form-control" 
+							                               	id="inputRUCEmpleadorIncapacidad" name="inputRUCEmpleadorIncapacidad">
+													</div>
+													<div class="form-group col-lg-4 col-xs-4">
+														<label for="inputMontoSubsidiarIncapacidad">Monto a subsidiar:</label>
+							                            <input type="number" class="form-control" 
+							                               	id="inputMontoSubsidiarIncapacidad" name="inputMontoSubsidiarIncapacidad">
+													</div>
+												</div>
+												<div class="row" align="left">
+													<div class="form-group col-lg-1 col-xs-1"></div>
+													<div class="form-group col-lg-4 col-xs-4">
+														<label for="inputCITTIncapacidad">CITT (21vo día a subsidiar):</label>
+							                            <input type="text" class="form-control" 
+							                               	id="inputCITTIncapacidad" name="inputCITTIncapacidad">
+													</div>
+												</div>
+											</div>
+											<div class="form-group col-lg-3 col-xs-3 text-center">
+												<br>
+					                        	<button id='btnRegistrar2' name='btnRegistrar2' type="submit" class="btn btn-primary">Adjuntar sustento</button>
+											</div>
+										</div>
+										<div class="row" align="left">
+					                    	<pre>  Anexo 1040:  <a target="_blank" href="http://www.essalud.gob.pe/downloads/SOLICITUD_DE_PRESTACIONES_ECONOMICAS.pdf">http://www.essalud.gob.pe/downloads/SOLICITUD_DE_PRESTACIONES_ECONOMICAS.pdf</a></pre>
+					                    </div>
+									</div>
+									<!-- TAB FORMULARIO REGISTRO INCAPACIDAD (FINAL) -->
+									
+									<!-- TAB SEPELIO (INICIO) -->
+									<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-profile-tab">
+										<hr>
+										<div class="row" align="left">
+											<div class="form-group col-lg-3 col-xs-3 border-right">
+					                	   		<div class="row" align="center">
+					                	   			<div class="form-group col-lg-12 col-xs-12">
+					                	   				<h6>DATOS DEL TITULAR FALLECIDO</h6>
+					                	   			</div>
+					                	   		</div>
+					                	   		<div class="row" align="left">
+					                	   			<div class="form-group col-lg-1 col-xs-1"></div>
+					                	   			<div class="form-group col-lg-10 col-xs-10">
+						                	   			<label for="inputFechaFallecimiento">Fecha de Fallecimiento:</label>
+						                            	<input type="date" class="form-control" id="inputFechaFallecimiento" name="inputFechaFallecimiento">
+					                            	</div>
+					                	   		</div>
+					                	   		<div class="row" align="left">
+					                	   			<div class="form-group col-lg-1 col-xs-1"></div>
+					                	   			<div class="form-group col-lg-10 col-xs-10">
+						                	   			<label for="inputRucUltimoEmpleadorFallec">RUC Último Empleador:</label>
+						                            	<input type="text" class="form-control" id="inputRucUltimoEmpleadorFallec" name="inputRucUltimoEmpleadorFallec">
+					                            	</div>
+					                	   		</div>
+					                	   		<div class="row" align="left">
+					                	   			<div class="form-group col-lg-1 col-xs-1"></div>
+					                	   			<div class="form-group col-lg-3 col-xs-3">
+						                	   			<label for="selectTipoDocEmpleadorFallec">Tipo:</label>
+						                            	<select class="form-control" id="selectTipoDocEmpleadorFallec" name="selectTipoDocEmpleadorFallec" required>
+															<option value="DNI">DNI</option>
+															<option value="RUC">RUC</option>
+															<option value="C.E.">Carnet de Extranjería</option>
+															<option value="PTP">PTP</option>
+															<option value="Pasaporte">Pasaporte</option>
+														</select>
+					                            	</div>
+					                            	<div class="form-group col-lg-7 col-xs-7">
+						                	   			<label for="inputNumeroDocEmpleadorFallec">Número Documento:</label>
+						                            	<input type="text" class="form-control" id="inputNumeroDocEmpleadorFallec" name="inputNumeroDocEmpleadorFallec">
+					                            	</div>
+					                            </div>
+					                            <div class="row" align="left">
+					                	   			<div class="form-group col-lg-1 col-xs-1"></div>
+					                	   			<div class="form-group col-lg-10 col-xs-10">
+						                	   			<label for="inputMontoSubsidioFallec">Monto a subsidiar:</label>
+						                            	<input type="number" class="form-control" id="inputMontoSubsidioFallec" name="inputMontoSubsidioFallec">
+					                            	</div>
+					                            </div>
+					                	   	</div>
+					                	   	<div class="form-group col-lg-6 col-xs-6 border-right">
+					                	   		<div class="row" align="left">
+					                	   			<div class="form-group col-lg-1 col-xs-1"></div>
+					                	   			<div class="form-group col-lg-10 col-xs-10">
+					                	   				<h6>DATOS BENEFICIARIO</h6>
+					                	   			</div>
+					                	   		</div>
+					                	   		<div class="row" align="left">
+					                	   			<div class="form-group col-lg-1 col-xs-1"></div>
+					                	   			<div class="form-group col-lg-2 col-xs-2">
+						                	   			<label for="selectTipoDocFallec">Tipo:</label>
+						                            	<select class="form-control" id="selectTipoDocFallec" name="selectTipoDocFallec" required>
+															<option value="DNI">DNI</option>
+															<option value="RUC">RUC</option>
+															<option value="C.E.">Carnet de Extranjería</option>
+															<option value="PTP">PTP</option>
+															<option value="Pasaporte">Pasaporte</option>
+														</select>
+					                            	</div>
+					                            	<div class="form-group col-lg-3 col-xs-3">
+						                	   			<label for="inputNumeroDocFallec">Número Documento:</label>
+						                            	<input type="text" class="form-control" id="inputNumeroDocFallec" name="inputNumeroDocFallec">
+					                            	</div>
+					                            	<div class="form-group col-lg-5 col-xs-5">
+						                	   			<label for="inputNombreBenefFallec">Nombre:</label>
+						                            	<input type="text" class="form-control" id="inputNombreBenefFallec" name="inputNombreBenefFallec">
+					                            	</div>
+					                	   		</div>
+					                	   		<div class="row" align="left">
+					                	   			<div class="form-group col-lg-1 col-xs-1"></div>
+					                	   			<div class="form-group col-lg-5 col-xs-5">
+						                	   			<label for="selectParentescoFallec">Parentesco:</label>
+						                            	<select class="form-control" id="selectParentescoFallec" name="selectParentescoFallec" required>
+															<option value="Conyuge">Cónyuge</option>
+															<option value="Concubino">Concubino(a)</option>
+															<option value="Padre">Padre</option>
+															<option value="Madre">Madre</option>
+															<option value="Hijo mayor">Hijo(a) Mayor</option>
+															<option value="Hermano">Hermano(a)</option>
+														</select>
+					                            	</div>
+					                            	<div class="form-group col-lg-5 col-xs-5">
+						                	   			<label for="inputNumeroCertDefuncion">Número Certificado de Defunción:</label>
+						                            	<input type="text" class="form-control" id="inputNumeroCertDefuncion" name="inputNumeroCertDefuncion">
+					                            	</div>
+					                	   		</div>
+					                	   	</div>
+					                	   	<div class="form-group col-lg-3 col-xs-3 text-center">
+						                	   	<br>
+					                        	<button id='btnRegistrar3' name='btnRegistrar3' type="submit" class="btn btn-primary">Adjuntar sustento</button>
+					                	   	</div>
+					               		</div>
+					               		<div class="row" align="left">
+					                    	<pre>  Anexo 1040:  <a target="_blank" href="http://www.essalud.gob.pe/downloads/SOLICITUD_DE_PRESTACIONES_ECONOMICAS.pdf">http://www.essalud.gob.pe/downloads/SOLICITUD_DE_PRESTACIONES_ECONOMICAS.pdf</a></pre>
+					                    </div>
+									</div>
+									<!-- TAB SEPELIO (FINAL) -->
+									
+									<!-- TAB FORMULARIO 1010 (INICIO) -->
+									<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+										<hr>
+										<div class="row" align="left">
+											<div class="form-group col-lg-3 col-xs-3 border-right">
+					                	   		<div class="row" align="center">
+					                	   			<div class="form-group col-lg-12 col-xs-12">
+					                	   				<h6>ACREDITACION LATENCIA</h6>
+					                	   			</div>
+					                	   		</div>
+					                	   		<div class="row" align="left">
+					                	   			<div class="form-group col-lg-1 col-xs-1"></div>
+					                	   			<div class="form-group col-lg-10 col-xs-10">
+						                	   			<label for="inputFechaCese">Fecha de Cese:</label>
+						                            	<input type="date" class="form-control" id="inputFechaCese" name="inputFechaCese">
+					                            	</div>
+					                	   		</div>
+					                	   		<div class="row" align="left">
+					                	   			<div class="form-group col-lg-1 col-xs-1"></div>
+					                	   			<div class="form-group col-lg-10 col-xs-10">
+						                	   			<label for="inputUltimoEmpleadorRUC">Último empleador (RUC):</label>
+						                            	<input type="text" class="form-control" id="inputUltimoEmpleadorRUC" name="inputUltimoEmpleadorRUC">
+					                            	</div>
+					                	   		</div>
+					                        </div>
+					                        <div class="form-group col-lg-3 col-xs-3 border-right">
+					                	   		<div class="row" align="center">
+					                	   			<div class="form-group col-lg-12 col-xs-12">
+					                	   				<h6>BAJA DE TITULAR</h6>
+					                	   			</div>
+					                	   		</div>
+					                	   		<div class="row" align="left">
+					                	   			<div class="form-group col-lg-1 col-xs-1"></div>
+					                	   			<div class="form-group col-lg-10 col-xs-10">
+						                	   			<label for="inputFechaCeseFallec">Fecha de Cese / Fallecimiento:</label>
+						                            	<input type="date" class="form-control" id="inputFechaCeseFallec" name="inputFechaCeseFallec">
+					                            	</div>
+					                	   		</div>
+					                	   		<div class="row" align="left">
+					                	   			<div class="form-group col-lg-1 col-xs-1"></div>
+					                	   			<div class="form-group col-lg-10 col-xs-10">
+						                	   			<label for="inputUltimoEmpleadorRUCBaja">Último empleador (RUC):</label>
+						                            	<input type="text" class="form-control" id="inputUltimoEmpleadorRUCBaja" name="inputUltimoEmpleadorRUCBaja">
+					                            	</div>
+					                	   		</div>
+					                        </div>
+					                        <div class="form-group col-lg-3 col-xs-3 border-right">
+					                	   		<div class="row" align="center">
+					                	   			<div class="form-group col-lg-12 col-xs-12">
+					                	   				<h6>ACTUALIZACION DE DATOS / DIRECCION</h6>
+					                	   			</div>
+					                	   		</div>
+					                	   		<div class="row" align="left">
+					                	   			<div class="form-group col-lg-1 col-xs-1"></div>
+					                	   			<div class="form-group col-lg-10 col-xs-10">
+					                	   				<h7>Registro para extranjeros</h7>
+					                	   			</div>
+					                	   		</div>
+					                	   		<div class="row" align="left">
+					                	   			<div class="form-group col-lg-4 col-xs-4">
+					                	   				<select class="form-control" id="selectActualizaDepart" name="selectActualizaDepart">
+															<option value="empty">Depart.</option>
+															<option value="Lima">Lima</option>
+															<option value="Ica">Ica</option>
+														</select>
+					                	   			</div>
+					                	   			<div class="form-group col-lg-4 col-xs-4">
+					                	   				<select class="form-control" id="selectActualizaProv" name="selectActualizaProv">
+															<option value="empty">Prov.</option>
+															<option value="Lima">Lima</option>
+															<option value="Ica">Cañete</option>
+														</select>
+					                	   			</div>
+					                	   			<div class="form-group col-lg-4 col-xs-4">
+					                	   				<select class="form-control" id="selectActualizaDistrito" name="selectActualizaDistrito">
+															<option value="empty">Dist.</option>
+															<option value="Lima">Lima</option>
+															<option value="Ica">Rimac</option>
+														</select>
+					                	   			</div>
+					                	   		</div>
+					                	   		<div class="row" align="left">
+					                	   			<div class="form-group col-lg-12 col-xs-12">
+					                	   				<label for="inputActualizaDireccion">Dirección:</label>
+						                            	<input type="text" class="form-control" id="inputActualizaDireccion" name="inputActualizaDireccion">
+					                	   			</div>
+					                	   		</div>
+					                        </div>
+					                        <div class="form-group col-lg-3 col-xs-3 text-center">
+					                        	<br>
+					                        	<button id='btnRegistrar4' name='btnRegistrar4' type="submit" class="btn btn-primary">Adjuntar sustento</button>
+					                        </div>
+										</div>
+										<div class="row" align="left">
+					                    	<pre>  Anexo 1010:  <a target="_blank" href="http://www.essalud.gob.pe/downloads/FORM_UNI_FUR-1010.pdf">http://www.essalud.gob.pe/downloads/FORM_UNI_FUR-1010.pdf</a></pre>
+					                    </div>
+									</div>
+									<!-- TAB FORMULARIO 1010 (FINAL) -->
+					            </div>
+					        </div>
+	                	</div>
+	           		</div>
+	          	</div>
+          	</form>
+		</div>
+    </div>
+    <div class="main-footer">
+	  	&copy; essalud.gob.pe
+	</div>
+    <!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+	<script src="js/bootstrap-datetimepicker.min.js"></script>
+	<!-- Page level plugins -->
+	<script src="vendor/chart.js/Chart.min.js"></script>
+	<!-- Page level custom scripts -->
+	<script src="js/demo/chart-area-demo.js"></script>
+	<script src="js/demo/chart-pie-demo.js"></script>
+	<!-- Page level plugins -->
+	<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- Page level custom scripts -->
+	<script src="js/demo/datatables-demo.js"></script>
+	<script type="text/javascript">
+		$(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
+	</script>
+	<script type="text/javascript">
+		function activarRequired(formActive){
+			//TODOS CAMPOS NO REQUIRED
+			
+			//CAMPOS FORM 1
+			if(formActive==1){
+				
+			}
+			//CAMPOS FORM 2
+			if(formActive==2){
+				
+			}
+			//CAMPOS FORM 3
+			if(formActive==3){
+				
+			}
+			//CAMPOS FORM 4
+			if(formActive==4){
+				
+			}			
+		}
+	</script>
+</body>
